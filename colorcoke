@@ -1,9 +1,11 @@
 #!/usr/bin/perl
-# ... cause I was high when I wrote this...
+our $APP     = 'colorcoke';
+our $VERSION = 0.3;
 
 use strict;
 use feature 'say';
 use Getopt::Long;
+use Pod::Usage;
 
 my $DEBUG = 0;
 
@@ -13,6 +15,8 @@ our $opt_starting_point = 17;  # Start from 17
 our $opt_endpoint       = 231; # End at 231
 our $opt_ansi_only      = 0;
 
+pod2usage(verbose => 1) if(!@ARGV);
+
 GetOptions(
   'hex:s'        => \$opt_hex,
   'red:i'        => \$opt_r_step,
@@ -21,6 +25,9 @@ GetOptions(
   'start:i'      => \$opt_starting_point,
   'end:i'        => \$opt_endpoint,
   'ansi'         => \$opt_ansi_only,
+  'help'         => sub { pod2usage(verbose => 1) },
+  'man'          => sub { pod2usage(verbose => 3) },
+
 );
 
 say "R Step: $opt_r_step";
@@ -89,3 +96,51 @@ sub make_shade {
   }
   return(@tint);
 }
+
+=pod
+
+=head1 NAME
+
+  colorcoke - modify the extended, non-ANSI terminal colorset
+
+=head1 DESCRIPTION
+
+  colorcoke lets one modify the extended colorset (88-16 or 256-16 colors,
+  respectively) for a running terminal session. The change takes effect
+  immediately - no need to restart the terminal, like when using xrdb.
+
+  Shades and tints can be generated for an arbitary number of ranges.
+
+  The ANSI colors can be left untouched, be included in a shade or set
+  separately. One can also exclude everything but the ANSI colors.
+
+  The grey scale ramp (extended color index 232-255) is left untouched by
+  default. To include them, set the end point to 255.
+
+  The starting point of a shade is specified with the -h flag, and the stepping
+  is controlled with the -r, -g and -b flag - red, green and blue channel.
+
+=head1 OPTIONS
+
+  -h,   --hex     the color which will start the shade
+  -r,   --red     red channel stepping
+  -g,   --green   green channel stepping
+  -b,   --blue    blue channel stepping
+  -s,   --start   first color index to operate on (default: 17)
+  -e,   --end     last  color index to operate on (default: 231)
+  -a,   --ansi    modify the ANSI color range only
+
+  -h,   --help    show the help and exit
+  -m,   --man     show the manpage and exit
+
+=head1 AUTHOR
+
+Written by Magnus Woldrich
+
+=head1 COPYRIGHT
+
+Copyright (C) 2010 Magnus Woldrich
+
+Licence GPLv2
+
+=cut
