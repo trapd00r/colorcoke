@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 our $APP     = 'colorcoke';
-our $VERSION = 0.3;
+our $VERSION = '0.3.1';
 
 use strict;
 use feature 'say';
@@ -40,7 +40,6 @@ say " END: $opt_endpoint";
 
 set_shade(make_shade());
 
-
 sub set_shade {
   my @colors = @_;
 
@@ -75,9 +74,9 @@ sub make_shade {
   for ($opt_starting_point .. $opt_endpoint) {
 
     if($opt_random) {
-      $r = rand(128) . rand(128);
-      $g = rand(128) . rand(128);
-      $b = rand(128) . rand(128);
+      $r = sprintf("%.2d", rand(128) . rand(128));
+      $g = sprintf("%.2d", rand(128) . rand(128));
+      $b = sprintf("%.2d", rand(128) . rand(128));
     }
 
     $r = (($r + $opt_r_step) < (255 - ($opt_r_step + $r)))
