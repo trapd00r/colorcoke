@@ -1,11 +1,6 @@
-Colorcoke
-=========
+# NAME
 
-It's a known fact that you can configure your ANSI colors however you want.
-
-It's a known fact that you can't configure any colors above those ANSI colors.
-
-Now you can.
+  colorcoke - modify the extended, non-ANSI terminal colorset
 
 ![screenshot](http://github.com/trapd00r/colorcoke/raw/master/extra/cc256.png)
 
@@ -13,9 +8,6 @@ Now you can.
 
 ![screenshot](http://github.com/trapd00r/colorcoke/raw/master/extra/c256.png)
 
-# NAME
-
-  colorcoke - modify the extended, non-ANSI terminal colorset
 
 # DESCRIPTION
 
@@ -37,14 +29,22 @@ Now you can.
 # OPTIONS
 
   -h,   --hex     the color which will start the shade
+
   -r,   --red     red channel stepping
+
   -g,   --green   green channel stepping
+
   -b,   --blue    blue channel stepping
+
   -s,   --start   first color index to operate on (default: 17)
+
   -e,   --end     last  color index to operate on (default: 231)
+
   -a,   --ansi    modify the ANSI color range only
 
+
   -h,   --help    show the help and exit
+
   -m,   --man     show the manpage and exit
 
 # AUTHOR
