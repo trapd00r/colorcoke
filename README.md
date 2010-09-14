@@ -9,4 +9,7 @@ Now you can.
 
 ![screenshot](http://github.com/trapd00r/colorcoke/raw/master/extra/cc256.png)
 
+![screenshot](http://github.com/trapd00r/colorcoke/raw/master/extra/c256-red.png)
+
 ![screenshot](http://github.com/trapd00r/colorcoke/raw/master/extra/c256.png)
+
