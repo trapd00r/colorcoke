@@ -66,12 +66,19 @@ sub make_shade {
   $opt_starting_point = 0 if($opt_starting_point == 1); # Include ANSI
   $opt_endpoint     = 255 if($opt_endpoint == 1); # Include greyscale
 
+
   if($opt_ansi_only) {
     $opt_starting_point = 0;
     $opt_endpoint       = 16;
   }
 
   for ($opt_starting_point .. $opt_endpoint) {
+
+    if($opt_random) {
+      $r = rand(128) . rand(128);
+      $g = rand(128) . rand(128);
+      $b = rand(128) . rand(128);
+    }
 
     $r = (($r + $opt_r_step) < (255 - ($opt_r_step + $r)))
       ? ($r + $opt_r_step)
