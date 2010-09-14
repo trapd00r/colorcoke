@@ -14,17 +14,19 @@ our $opt_hex = '000000';
 our $opt_starting_point = 17;  # Start from 17
 our $opt_endpoint       = 231; # End at 231
 our $opt_ansi_only      = 0;
+our $opt_random         = 0;
 
 pod2usage(verbose => 1) if(!@ARGV);
 
 GetOptions(
-  'hex:s'        => \$opt_hex,
+  'h|hex:s'      => \$opt_hex,
   'red:i'        => \$opt_r_step,
   'g|green:i'    => \$opt_g_step,
   'blue:i'       => \$opt_b_step,
   'start:i'      => \$opt_starting_point,
   'end:i'        => \$opt_endpoint,
   'ansi'         => \$opt_ansi_only,
+  'random'       => \$opt_random,
   'help'         => sub { pod2usage(verbose => 1) },
   'man'          => sub { pod2usage(verbose => 3) },
 
@@ -47,6 +49,8 @@ sub set_shade {
   for my $color(@colors) {
     my ($r, $g, $b) = $color =~ /(..)(..)(..)/;
     printf("\e]4;$i;rgb:$r/$g/$b\e\\");
+    printf("\e[38;5;$i%s$i\e[0m", 'm');
+
     $i++;
   }
 }
@@ -55,12 +59,16 @@ sub make_shade {
   my @tint = ();
   my ($r, $g, $b) = $opt_hex =~ /(..)(..)(..)/; #FIXME
 
+  $r = hex($r);
+  $g = hex($g);
+  $b = hex($b);
+
   $opt_starting_point = 0 if($opt_starting_point == 1); # Include ANSI
   $opt_endpoint     = 255 if($opt_endpoint == 1); # Include greyscale
 
   if($opt_ansi_only) {
     $opt_starting_point = 0;
-    $opt_endpoint     = 16;
+    $opt_endpoint       = 16;
   }
 
   for ($opt_starting_point .. $opt_endpoint) {
@@ -130,7 +138,7 @@ sub make_shade {
   -e,   --end     last  color index to operate on (default: 231)
   -a,   --ansi    modify the ANSI color range only
 
-  -h,   --help    show the help and exit
+       --help    show the help and exit
   -m,   --man     show the manpage and exit
 
 =head1 AUTHOR
