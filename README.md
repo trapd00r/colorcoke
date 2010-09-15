@@ -11,41 +11,52 @@
 
 # DESCRIPTION
 
-  colorcoke lets one modify the extended colorset (88-16 or 256-16 colors,
-  respectively) for a running terminal session. The change takes effect
-  immediately - no need to restart the terminal, like when using xrdb.
+      colorcoke lets one modify the extended colorset (88-16 or 256-16 colors,
+      respectively) for a running terminal session. The change takes effect
+      immediately - no need to restart the terminal, like when using xrdb.
 
-  Shades and tints can be generated for an arbitary number of ranges.
+      Shades and tints can be generated for an arbitary number of ranges.
 
-  The ANSI colors can be left untouched, be included in a shade or set
-  separately. One can also exclude everything but the ANSI colors.
+      The ANSI colors can be left untouched, be included in a shade or set
+      separately. One can also exclude everything but the ANSI colors.
+      The ANSI colors is untouched by default.
 
-  The grey scale ramp (extended color index 232-255) is left untouched by
-  default. To include them, set the end point to 255.
+      The grey scale ramp (extended color index 232-255) is left untouched by
+      default. To include them, set the end point to 255.
 
-  The starting point of a shade is specified with the -h flag, and the stepping
-  is controlled with the -r, -g and -b flag - red, green and blue channel.
+      The starting point of a shade is specified with the -h flag, and the stepping
+      is controlled with the -r, -g and -b flag - red, green and blue channel.
 
 # OPTIONS
 
-  -h,   --hex     the color which will start the shade
+      -c,   --color       the color which will start the shade
 
-  -r,   --red     red channel stepping
+      -r,   --red         red channel stepping
 
-  -g,   --green   green channel stepping
+      -g,   --green       green channel stepping
 
-  -b,   --blue    blue channel stepping
+      -b,   --blue        blue channel stepping
 
-  -s,   --start   first color index to operate on (default: 17)
+      -s,   --start       first color index to operate on (default: 17)
 
-  -e,   --end     last  color index to operate on (default: 231)
+      -e,   --end         last  color index to operate on (default: 231)
 
-  -a,   --ansi    modify the ANSI color range only
+      -a,   --ansi        modify the ANSI color range only
+
+      -1,   --single      set a single color (HEX, index)
+
+            --random      randomize the colors
+
+      -rr,  --rand-red    control amount of red
+
+      -rb,  --rand-blue   control amount of blue
+
+      -rg,  --rand-green  control amount of green
 
 
-  -h,   --help    show the help and exit
+      -h,   --help        show the help and exit
 
-  -m,   --man     show the manpage and exit
+      -m,   --man         show the manpage and exit
 
 # AUTHOR
 
