@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 our $APP     = 'colorcoke';
-our $VERSION = '0.3.2';
+our $VERSION = '0.3.4';
 
 use strict;
 use feature 'say';
@@ -10,28 +10,38 @@ use Pod::Usage;
 my $DEBUG = 0;
 
 our($opt_r_step, $opt_g_step, $opt_b_step) = (10) x 3;
-our $opt_hex = '000000';
+our $opt_hex            = '000000';
 our $opt_starting_point = 17;  # Start from 17
 our $opt_endpoint       = 231; # End at 231
 our $opt_ansi_only      = 0;
 our $opt_random         = 0;
+our $opt_random_r       = 256;
+our $opt_random_g       = 256;
+our $opt_random_b       = 256;
 our $opt_single_hex     = 0;
 our @opt_single_color   = ();
 
-pod2usage(verbose => 1) if(!@ARGV);
+if(!@ARGV) {
+  say "$APP $VERSION\n";
+  pod2usage(verbose => 1);
+}
 
 GetOptions(
-  'c|color:s'     => \$opt_hex,
-  'r|red:i'       => \$opt_r_step,
-  'g|green:i'     => \$opt_g_step,
-  'b|blue:i'      => \$opt_b_step,
-  '1|single:s{2}' => \@opt_single_color,
-  's|start:i'     => \$opt_starting_point,
-  'end:i'         => \$opt_endpoint,
-  'ansi'          => \$opt_ansi_only,
-  'random'        => \$opt_random,
-  'h|help'        => sub { pod2usage(verbose => 1) and exit(0) },
-  'man'           => sub { pod2usage(verbose => 3) and exit(0) },
+  'c|color:s'       => \$opt_hex,
+  'r|red:i'         => \$opt_r_step,
+  'g|green:i'       => \$opt_g_step,
+  'b|blue:i'        => \$opt_b_step,
+  '1|single:s{2}'   => \@opt_single_color,
+  's|start:i'       => \$opt_starting_point,
+  'end:i'           => \$opt_endpoint,
+  'ansi'            => \$opt_ansi_only,
+  'random'          => \$opt_random,
+  'rr|rand-red:i'   => \$opt_random_r,
+  'rg|rand-green:i' => \$opt_random_g,
+  'rb|rand-blue:i'  => \$opt_random_b,
+  'h|help'          => sub { say "$APP $VERSION\n"; pod2usage(verbose => 1) },
+  'man'             => sub { pod2usage(verbose => 3) and exit(0) },
+  'debug'           => \$DEBUG,
 );
 
 say "\e[38;5;160mR\e[0m Step: $opt_r_step";
@@ -98,24 +108,32 @@ sub make_shade {
   for ($opt_starting_point .. $opt_endpoint) {
 
     if($opt_random) {
-      say $r = int(rand(256));
-      say $g = int(rand(256));
-      say $b = int(rand(256));
+
+      $r = int(rand($opt_random_r) % 256);
+      $g = int(rand($opt_random_g) % 256);
+      $b = int(rand($opt_random_b) % 256);
+
+      do {
+        say "\e[1mRand R\e[0m: $r";
+        say "\e[1mRand G\e[0m: $g";
+        say "\e[1mRand B\e[0m: $b";
+      } if ($DEBUG);
+
     }
 
-    $r = (($r + $opt_r_step) < (255 - ($opt_r_step + $r)))
+    $r = (($r + $opt_r_step) < (256 - ($opt_r_step + $r)))
       ? ($r + $opt_r_step)
-      : (255 - ($opt_r_step++))
+      : (255 - ($opt_r_step))
       ;
 
-    $g = (($g + $opt_g_step) < (255 - ($opt_g_step + $g)))
+    $g = (($g + $opt_g_step) < (256 - ($opt_g_step + $g)))
       ? ($g + $opt_g_step)
-      : (255 - ($opt_g_step++))
+      : (255 - ($opt_g_step))
       ;
 
-    $b = (($b + $opt_b_step) < (255 - ($opt_b_step + $b)))
+    $b = (($b + $opt_b_step) < (256 - ($opt_b_step + $b)))
       ? ($b + $opt_b_step)
-      : (255 - ($opt_b_step++))
+      : (255 - ($opt_b_step))
       ;
 
     my $hex_r = sprintf("%02x", $r);
@@ -161,18 +179,21 @@ sub make_shade {
 
 =head1 OPTIONS
 
-  -c,   --color   the color which will start the shade
-  -r,   --red     red channel stepping
-  -g,   --green   green channel stepping
-  -b,   --blue    blue channel stepping
-  -s,   --start   first color index to operate on (default: 17)
-  -e,   --end     last  color index to operate on (default: 231)
-  -a,   --ansi    modify the ANSI color range only
-        --random  randomize the colors
-  -1    --single  set a single color (HEX, index)
+  -c,   --color       the color which will start the shade
+  -r,   --red         red channel stepping
+  -g,   --green       green channel stepping
+  -b,   --blue        blue channel stepping
+  -s,   --start       first color index to operate on (default: 17)
+  -e,   --end         last  color index to operate on (default: 231)
+  -a,   --ansi        modify the ANSI color range only
+  -1,   --single      set a single color (HEX, index)
+        --random      randomize the colors
+  -rr,  --rand-red    control amount of red
+  -rb,  --rand-blue   control amount of blue
+  -rg,  --rand-green  control amount of green
 
-        --help    show the help and exit
-  -m,   --man     show the manpage and exit
+  -h,   --help        show the help and exit
+  -m,   --man         show the manpage and exit
 
 =head1 AUTHOR
 
