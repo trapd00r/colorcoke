@@ -26,7 +26,7 @@ GetOptions(
   'g|green:i'     => \$opt_g_step,
   'b|blue:i'      => \$opt_b_step,
   '1|single:s{2}' => \@opt_single_color,
-  'start:i'       => \$opt_starting_point,
+  's|start:i'     => \$opt_starting_point,
   'end:i'         => \$opt_endpoint,
   'ansi'          => \$opt_ansi_only,
   'random'        => \$opt_random,
@@ -98,9 +98,9 @@ sub make_shade {
   for ($opt_starting_point .. $opt_endpoint) {
 
     if($opt_random) {
-      $r = sprintf("%.2d", rand(128) . rand(128));
-      $g = sprintf("%.2d", rand(128) . rand(128));
-      $b = sprintf("%.2d", rand(128) . rand(128));
+      say $r = int(rand(256));
+      say $g = int(rand(256));
+      say $b = int(rand(256));
     }
 
     $r = (($r + $opt_r_step) < (255 - ($opt_r_step + $r)))
