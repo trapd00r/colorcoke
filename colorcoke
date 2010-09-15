@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 our $APP     = 'colorcoke';
-our $VERSION = '0.3.1';
+our $VERSION = '0.3.2';
 
 use strict;
 use feature 'say';
@@ -21,17 +21,17 @@ our @opt_single_color   = ();
 pod2usage(verbose => 1) if(!@ARGV);
 
 GetOptions(
-  'c|color:s'    => \$opt_hex,
-  'r|red:i'      => \$opt_r_step,
-  'g|green:i'    => \$opt_g_step,
-  'b|blue:i'     => \$opt_b_step,
-  'h|hex:s{2}'   => \@opt_single_color,
-  'start:i'      => \$opt_starting_point,
-  'end:i'        => \$opt_endpoint,
-  'ansi'         => \$opt_ansi_only,
-  'random'       => \$opt_random,
-  'help'         => sub { pod2usage(verbose => 1) and exit(0) },
-  'man'          => sub { pod2usage(verbose => 3) and exit(0) },
+  'c|color:s'     => \$opt_hex,
+  'r|red:i'       => \$opt_r_step,
+  'g|green:i'     => \$opt_g_step,
+  'b|blue:i'      => \$opt_b_step,
+  '1|single:s{2}' => \@opt_single_color,
+  'start:i'       => \$opt_starting_point,
+  'end:i'         => \$opt_endpoint,
+  'ansi'          => \$opt_ansi_only,
+  'random'        => \$opt_random,
+  'h|help'        => sub { pod2usage(verbose => 1) and exit(0) },
+  'man'           => sub { pod2usage(verbose => 3) and exit(0) },
 );
 
 say "\e[38;5;160mR\e[0m Step: $opt_r_step";
@@ -53,7 +53,7 @@ sub set_single_color {
   my($r,$g,$b) = getrgb($rgb);
   printf("\e]4;$index;rgb:$r/$g/$b\e\\");
   say;
-  printf("\e[48;5;$index%s   $index  \e[0m", 'm');
+  printf("\e[38;5;$index%s   $index  \e[0m", 'm');
 }
 sub getrgb {
   my $hex = shift;
@@ -71,7 +71,7 @@ sub set_shade {
   for my $color(@colors) {
     my ($r, $g, $b) = $color =~ /(..)(..)(..)/;
     printf("\e]4;$i;rgb:$r/$g/$b\e\\");
-    printf("\e[48;5;$i%s$i\e[0m", 'm');
+    printf("\e[38;5;$i%s$i\e[0m·", 'm');
 
     $i++;
   }
@@ -161,7 +161,7 @@ sub make_shade {
 
 =head1 OPTIONS
 
-  -c,   --hex     the color which will start the shade
+  -c,   --color   the color which will start the shade
   -r,   --red     red channel stepping
   -g,   --green   green channel stepping
   -b,   --blue    blue channel stepping
@@ -169,7 +169,7 @@ sub make_shade {
   -e,   --end     last  color index to operate on (default: 231)
   -a,   --ansi    modify the ANSI color range only
         --random  randomize the colors
-  -h,   --hex     set a single color (HEX, index)
+  -1    --single  set a single color (HEX, index)
 
         --help    show the help and exit
   -m,   --man     show the manpage and exit
