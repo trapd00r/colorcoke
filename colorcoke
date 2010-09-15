@@ -127,6 +127,7 @@ sub make_shade {
 
   The ANSI colors can be left untouched, be included in a shade or set
   separately. One can also exclude everything but the ANSI colors.
+  The ANSI colors is untouched by default.
 
   The grey scale ramp (extended color index 232-255) is left untouched by
   default. To include them, set the end point to 255.
