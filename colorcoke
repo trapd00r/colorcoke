@@ -20,9 +20,9 @@ pod2usage(verbose => 1) if(!@ARGV);
 
 GetOptions(
   'h|hex:s'      => \$opt_hex,
-  'red:i'        => \$opt_r_step,
+  'r|red:i'      => \$opt_r_step,
   'g|green:i'    => \$opt_g_step,
-  'blue:i'       => \$opt_b_step,
+  'b|blue:i'     => \$opt_b_step,
   'start:i'      => \$opt_starting_point,
   'end:i'        => \$opt_endpoint,
   'ansi'         => \$opt_ansi_only,
