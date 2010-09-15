@@ -30,32 +30,19 @@
 # OPTIONS
 
       -c,   --color       the color which will start the shade
-
       -r,   --red         red channel stepping
-
       -g,   --green       green channel stepping
-
       -b,   --blue        blue channel stepping
-
       -s,   --start       first color index to operate on (default: 17)
-
       -e,   --end         last  color index to operate on (default: 231)
-
       -a,   --ansi        modify the ANSI color range only
-
       -1,   --single      set a single color (HEX, index)
-
             --random      randomize the colors
-
       -rr,  --rand-red    control amount of red
-
       -rb,  --rand-blue   control amount of blue
-
       -rg,  --rand-green  control amount of green
 
-
       -h,   --help        show the help and exit
-
       -m,   --man         show the manpage and exit
 
 # AUTHOR
