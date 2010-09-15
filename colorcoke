@@ -143,6 +143,7 @@ sub make_shade {
   -s,   --start   first color index to operate on (default: 17)
   -e,   --end     last  color index to operate on (default: 231)
   -a,   --ansi    modify the ANSI color range only
+        --random  randomize the colors
 
         --help    show the help and exit
   -m,   --man     show the manpage and exit
