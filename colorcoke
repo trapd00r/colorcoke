@@ -20,7 +20,7 @@ our $opt_random_g       = 256;
 our $opt_random_b       = 256;
 our $opt_single_hex     = 0;
 our @opt_single_color   = ();
-our @opt_do_not_modify  = (3,232);
+our @opt_do_not_modify  = (0,7,15,232);
 
 if(!@ARGV) {
   say "$APP $VERSION\n";
