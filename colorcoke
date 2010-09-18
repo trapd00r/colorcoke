@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 our $APP     = 'colorcoke';
-our $VERSION = '0.3.4';
+our $VERSION = '0.3.5';
 
 use strict;
 use feature 'say';
@@ -20,6 +20,7 @@ our $opt_random_g       = 256;
 our $opt_random_b       = 256;
 our $opt_single_hex     = 0;
 our @opt_single_color   = ();
+our @opt_do_not_modify  = (3,232);
 
 if(!@ARGV) {
   say "$APP $VERSION\n";
@@ -39,6 +40,7 @@ GetOptions(
   'rr|rand-red:i'   => \$opt_random_r,
   'rg|rand-green:i' => \$opt_random_g,
   'rb|rand-blue:i'  => \$opt_random_b,
+  'no:i{1,}'        => \@opt_do_not_modify,
   'h|help'          => sub { say "$APP $VERSION\n"; pod2usage(verbose => 1) },
   'man'             => sub { pod2usage(verbose => 3) and exit(0) },
   'debug'           => \$DEBUG,
@@ -79,9 +81,12 @@ sub set_shade {
   my $i = $opt_starting_point;
 
   for my $color(@colors) {
-    my ($r, $g, $b) = $color =~ /(..)(..)(..)/;
-    printf("\e]4;$i;rgb:$r/$g/$b\e\\");
-    printf("\e[38;5;$i%s$i\e[0m·", 'm');
+    unless($i ~~ @opt_do_not_modify) {
+      my ($r, $g, $b) = $color =~ /(..)(..)(..)/;
+      printf("\e]4;$i;rgb:$r/$g/$b\e\\");
+      #printf("\e]10;rgb:$r/$g/$b\007");
+      printf("\e[38;5;$i%s$i\e[0m·", 'm');
+    }
 
     $i++;
   }
@@ -123,19 +128,25 @@ sub make_shade {
 
     $r = (($r + $opt_r_step) < (256 - ($opt_r_step + $r)))
       ? ($r + $opt_r_step)
-      : (255 - ($opt_r_step))
+      : ($r + $opt_r_step)
+      #: (256 - ($opt_r_step))
       ;
 
     $g = (($g + $opt_g_step) < (256 - ($opt_g_step + $g)))
       ? ($g + $opt_g_step)
-      : (255 - ($opt_g_step))
+      : ($g + $opt_g_step)
+      #: (256 - ($opt_g_step))
       ;
 
     $b = (($b + $opt_b_step) < (256 - ($opt_b_step + $b)))
       ? ($b + $opt_b_step)
-      : (255 - ($opt_b_step))
+      : ($b + $opt_b_step)
+      #: (256 - ($opt_b_step))
       ;
 
+      #$opt_r_step++ if($opt_random);
+      #$opt_g_step++ if($opt_random);
+      #$opt_b_step++ if($opt_random);
     my $hex_r = sprintf("%02x", $r);
     my $hex_g = sprintf("%02x", $g);
     my $hex_b = sprintf("%02x", $b);
@@ -191,6 +202,7 @@ sub make_shade {
   -rr,  --rand-red    control amount of red
   -rb,  --rand-blue   control amount of blue
   -rg,  --rand-green  control amount of green
+  -n,   --no          do not modify color n
 
   -h,   --help        show the help and exit
   -m,   --man         show the manpage and exit
