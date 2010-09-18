@@ -185,12 +185,18 @@ sub make_shade {
   The grey scale ramp (extended color index 232-255) is left untouched by
   default. To include them, set the end point to 255.
 
-  The starting point of a shade is specified with the -h flag, and the stepping
+  Additional colors can be left untouched by specifying their index with the
+  --no flag. This can also be configured in the configuration file.
+
+  The base color to use is specified with the -c flag, and the stepping
   is controlled with the -r, -g and -b flag - red, green and blue channel.
+
+  Red, blue and green amount is specified with -rr, -rg and -rb when the
+  randomizing option is used.
 
 =head1 OPTIONS
 
-  -c,   --color       the color which will start the shade
+  -c,   --color       the base color
   -r,   --red         red channel stepping
   -g,   --green       green channel stepping
   -b,   --blue        blue channel stepping
@@ -200,9 +206,9 @@ sub make_shade {
   -1,   --single      set a single color (HEX, index)
         --random      randomize the colors
   -rr,  --rand-red    control amount of red
-  -rb,  --rand-blue   control amount of blue
   -rg,  --rand-green  control amount of green
-  -n,   --no          do not modify color n
+  -rb,  --rand-blue   control amount of blue
+  -N,   --no          do not modify color index n
 
   -h,   --help        show the help and exit
   -m,   --man         show the manpage and exit
