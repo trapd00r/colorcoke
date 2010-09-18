@@ -1,0 +1,2 @@
+#!/bin/sh
+colorcoke --random -rr 245 -rg 10 -rb 255 -s 0 -e 255

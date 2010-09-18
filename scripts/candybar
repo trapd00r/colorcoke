@@ -1,0 +1,2 @@
+#!/bin/bash
+colorcoke -c 000000 -r 10 -g 255 -b 240 -s 0 -e 255
