@@ -60,19 +60,17 @@ if(scalar(@opt_single_color) == 2) {
 set_shade(make_shade());
 
 sub set_single_color {
-  my $rgb   = shift;
+  my $hex   = shift;
   my $index = shift;
-  my($r,$g,$b) = getrgb($rgb);
+  my($r,$g,$b) = $hex =~ /(..)(..)(..)/;
+
+
+  $r = hex($r);
+  $g = hex($g);
+  $b = hex($b);
+
   printf("\e]4;$index;rgb:$r/$g/$b\e\\");
-  say;
-  printf("\e[38;5;$index%s   $index  \e[0m", 'm');
-}
-sub getrgb {
-  my $hex = shift;
-  my ($r,$g,$b) = $hex =~ /(..)(..)(..)/;
-  ($r,$g,$b) = (hex($r), hex($g), hex($b));
-  print "$r | $g | $b\n";
-  return($r,$g,$b);
+  #printf("\e]4;#$hex\007");
 }
 
 sub set_shade {
