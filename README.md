@@ -42,7 +42,7 @@
     -rr,  --rand-red    control amount of red
     -rg,  --rand-green  control amount of green
     -rb,  --rand-blue   control amount of blue
-    -N,   --no          do not modify color index n
+    -n,   --no          do not modify color index n
 
     -h,   --help        show the help and exit
     -m,   --man         show the manpage and exit
