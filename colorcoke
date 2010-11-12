@@ -46,11 +46,11 @@ GetOptions(
   'debug'           => \$DEBUG,
 );
 
-say "\e[38;5;160mR\e[0m Step: $opt_r_step";
-say "\e[38;5;148mG\e[0m Step: $opt_g_step";
-say "\e[38;5;33mB\e[0m Step: $opt_b_step";
-say "ANSI: $opt_starting_point";
-say " END: $opt_endpoint";
+#say "\e[38;5;160mR\e[0m Step: $opt_r_step";
+#say "\e[38;5;148mG\e[0m Step: $opt_g_step";
+#say "\e[38;5;33mB\e[0m Step: $opt_b_step";
+#say "ANSI: $opt_starting_point";
+#say " END: $opt_endpoint";
 
 if(scalar(@opt_single_color) == 2) {
   set_single_color(@opt_single_color);
@@ -63,11 +63,6 @@ sub set_single_color {
   my $hex   = shift;
   my $index = shift;
   my($r,$g,$b) = $hex =~ /(..)(..)(..)/;
-
-
-  $r = hex($r);
-  $g = hex($g);
-  $b = hex($b);
 
   printf("\e]4;$index;rgb:$r/$g/$b\e\\");
   #printf("\e]4;#$hex\007");
