@@ -1,13 +1,14 @@
 #!/usr/bin/perl
 our $APP     = 'colorcoke';
-our $VERSION = '0.3.5';
+our $VERSION = '0.403';
 
 use strict;
-use feature 'say';
 use Getopt::Long;
 use Pod::Usage;
+use Term::ExtendedColor;
+use Term::ExtendedColor::Xresources;
 
-my $DEBUG = 0;
+my $DEBUG = $ENV{DEBUG};
 
 our($opt_r_step, $opt_g_step, $opt_b_step) = (10) x 3;
 our $opt_hex            = '000000';
@@ -23,7 +24,7 @@ our @opt_single_color   = ();
 our @opt_do_not_modify  = (0,7,15,232);
 
 if(!@ARGV) {
-  say "$APP $VERSION\n";
+  print "$APP $VERSION\n\n";
   pod2usage(verbose => 1);
 }
 
@@ -41,16 +42,11 @@ GetOptions(
   'rg|rand-green:i' => \$opt_random_g,
   'rb|rand-blue:i'  => \$opt_random_b,
   'no:i{1,}'        => \@opt_do_not_modify,
-  'h|help'          => sub { say "$APP $VERSION\n"; pod2usage(verbose => 1) },
-  'man'             => sub { pod2usage(verbose => 3) and exit(0) },
+  'h|help'          => sub { print "$APP $VERSION\n"; pod2usage(verbose => 1) },
+  'm|man'           => sub { pod2usage(verbose => 3) and exit(0); },
+  'v|version'       => sub { print "$APP v$VERSION\n" and exit(0); },
   'debug'           => \$DEBUG,
 );
-
-#say "\e[38;5;160mR\e[0m Step: $opt_r_step";
-#say "\e[38;5;148mG\e[0m Step: $opt_g_step";
-#say "\e[38;5;33mB\e[0m Step: $opt_b_step";
-#say "ANSI: $opt_starting_point";
-#say " END: $opt_endpoint";
 
 if(scalar(@opt_single_color) == 2) {
   set_single_color(@opt_single_color);
@@ -60,12 +56,12 @@ if(scalar(@opt_single_color) == 2) {
 set_shade(make_shade());
 
 sub set_single_color {
-  my $hex   = shift;
   my $index = shift;
-  my($r,$g,$b) = $hex =~ /(..)(..)(..)/;
+  my $hex   = shift;
+  #my($r,$g,$b) = $hex =~ /(..)(..)(..)/;
 
-  printf("\e]4;$index;rgb:$r/$g/$b\e\\");
-  #printf("\e]4;#$hex\007");
+  print set_xterm_color($index, $hex);
+
 }
 
 sub set_shade {
@@ -75,15 +71,18 @@ sub set_shade {
 
   for my $color(@colors) {
     unless($i ~~ @opt_do_not_modify) {
-      my ($r, $g, $b) = $color =~ /(..)(..)(..)/;
-      printf("\e]4;$i;rgb:$r/$g/$b\e\\");
-      #printf("\e]10;rgb:$r/$g/$b\007");
-      printf("\e[38;5;$i%s$i\e[0m·", 'm');
+      $color = substr($color, 0, 6);
+      print set_xterm_color($i, $color);
+      if(($i +1) % 10 == 0) {
+        print bg($i, fg(0, sprintf(" %03d ", $i))), "\n";
+      }
+      else {
+        print bg($i, fg(0, sprintf(" %03d ", $i)));
+      }
     }
-
     $i++;
   }
-  say;
+  print "\n";
 }
 
 sub make_shade {
@@ -110,12 +109,6 @@ sub make_shade {
       $r = int(rand($opt_random_r) % 256);
       $g = int(rand($opt_random_g) % 256);
       $b = int(rand($opt_random_b) % 256);
-
-      do {
-        say "\e[1mRand R\e[0m: $r";
-        say "\e[1mRand G\e[0m: $g";
-        say "\e[1mRand B\e[0m: $b";
-      } if ($DEBUG);
 
     }
 
@@ -144,14 +137,8 @@ sub make_shade {
     my $hex_g = sprintf("%02x", $g);
     my $hex_b = sprintf("%02x", $b);
 
-    do {
-      say "\e[1m$hex_r$hex_g$hex_b\e[0m";
-      say "\e[38;5;160m0xR\e[0m: $hex_r";
-      say "\e[38;5;148m0xG\e[0m: $hex_g";
-      say "\e[38;5;033m0xB\e[0m: $hex_b";
-    } if($DEBUG);
 
-    push(@tint, $hex_r . $hex_g . $hex_b);
+    push(@tint, "$hex_r$hex_g$hex_b");
 
   }
   return(@tint);
@@ -161,31 +148,34 @@ sub make_shade {
 
 =head1 NAME
 
-  colorcoke - modify the extended, non-ANSI terminal colorset
+colorcoke - modify the extended, non-ANSI terminal colorset
 
 =head1 DESCRIPTION
 
-  colorcoke lets one modify the extended colorset (88-16 or 256-16 colors,
-  respectively) for a running terminal session. The change takes effect
-  immediately - no need to restart the terminal, like when using xrdb.
+B<colorcoke> shows off some cool things you can do with the L<Term::ExtendedColor>
+family of modules.
 
-  Shades and tints can be generated for an arbitary number of ranges.
+colorcke lets one modify the extended colorset (88-16 or 256-16 colors,
+respectively) for a running terminal session. The change takes effect
+immediately - no need to restart the terminal, like when using xrdb.
 
-  The ANSI colors can be left untouched, be included in a shade or set
-  separately. One can also exclude everything but the ANSI colors.
-  The ANSI colors is untouched by default.
+Shades and tints can be generated for an arbitary number of ranges.
 
-  The grey scale ramp (extended color index 232-255) is left untouched by
-  default. To include them, set the end point to 255.
+The ANSI colors can be left untouched, be included in a shade or set
+separately. One can also exclude everything but the ANSI colors.
+The ANSI colors is untouched by default.
 
-  Additional colors can be left untouched by specifying their index with the
-  --no flag. This can also be configured in the configuration file.
+The grey scale ramp (extended color index 232-255) is left untouched by
+default. To include them, set the end point to 255.
 
-  The base color to use is specified with the -c flag, and the stepping
-  is controlled with the -r, -g and -b flag - red, green and blue channel.
+Additional colors can be left untouched by specifying their index with the
+--no flag. This can also be configured in the configuration file.
 
-  Red, blue and green amount is specified with -rr, -rg and -rb when the
-  randomizing option is used.
+The base color to use is specified with the -c flag, and the stepping
+is controlled with the -r, -g and -b flag - red, green and blue channel.
+
+Red, blue and green amount is specified with -rr, -rg and -rb when the
+randomizing option is used.
 
 =head1 OPTIONS
 
@@ -204,16 +194,24 @@ sub make_shade {
   -n,   --no          do not modify color index n
 
   -h,   --help        show the help and exit
+  -v,   --version     show version info and exit
   -m,   --man         show the manpage and exit
 
 =head1 AUTHOR
 
-Written by Magnus Woldrich
+  Magnus Woldrich
+  CPAN ID: WOLDRICH
+  magnus@trapd00r.se
+  http://japh.se
+
+=head1 SEE ALSO
+
+L<Term::ExtendedColor>, L<Term::ExtendedColor::Xresources>, L<Term::ExtendedColor::TTY>
 
 =head1 COPYRIGHT
 
-Copyright (C) 2010 Magnus Woldrich
-
-Licence GPLv2
+Copyright 2010, 2011 Magnus Woldrich <magnus@trapd00r.se>. This program is free
+software; you may redistribute it and/or modify it under the same terms as
+Perl itself.
 
 =cut
