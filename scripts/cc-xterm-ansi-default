@@ -1,0 +1,17 @@
+#!/bin/sh
+colorcoke --single 0 000000
+colorcoke --single 1 cd0000
+colorcoke --single 2 00cd00
+colorcoke --single 3 cdcd00
+colorcoke --single 4 0000cd
+colorcoke --single 5 cd00cd
+colorcoke --single 6 00cdcd
+colorcoke --single 7 e5e5e5
+colorcoke --single 8 4d4d4d
+colorcoke --single 9 ff0000
+colorcoke --single 10 00ff00
+colorcoke --single 11 ffff00
+colorcoke --single 12 0000ff
+colorcoke --single 13 ff00ff
+colorcoke --single 14 00ffff
+colorcoke --single 15 ffffff
