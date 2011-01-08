@@ -1,0 +1,18 @@
+colorcoke
+Makefile.PL
+MANIFEST			This list of files
+README
+scripts/cc-blue
+scripts/cc-candybar
+scripts/cc-deeppurple
+scripts/cc-grey-ansi
+scripts/cc-kid
+scripts/cc-matrix
+scripts/cc-purple
+scripts/cc-rasta-ansi
+scripts/cc-rasta-full
+scripts/cc-woodman
+scripts/cc-woodman-ansi
+scripts/cc-x-color-scheme-trapd00r
+scripts/cc-xterm-256-default
+scripts/cc-xterm-ansi-default
