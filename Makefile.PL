@@ -4,6 +4,7 @@ use ExtUtils::MakeMaker;
 WriteMakefile(
     NAME                => 'App::Colorcoke',
     AUTHOR              => q{Magnus Woldrich <trapd00r@trapd00r.se>},
+    ABSTRACT            => 'Modify the extended terminal colorset',
     VERSION_FROM        => './colorcoke',
 
     ($ExtUtils::MakeMaker::VERSION >= 6.3002
