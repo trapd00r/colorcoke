@@ -1,2 +1,0 @@
-#!/bin/sh
-colorcoke --random -rr 255 -rg 160 -rb 0 -s -20 -e 17 -n 0 7 15

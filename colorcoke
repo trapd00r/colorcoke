@@ -1,12 +1,12 @@
 #!/usr/bin/perl
 our $APP     = 'colorcoke';
-our $VERSION = '0.404';
+our $VERSION = '0.407';
 
 use strict;
 use Getopt::Long;
 use Pod::Usage;
-use Term::ExtendedColor;
-use Term::ExtendedColor::Xresources;
+use Term::ExtendedColor qw(fg bg);
+use Term::ExtendedColor::Xresources qw(set_xterm_color);
 
 my $DEBUG = $ENV{DEBUG};
 
@@ -49,7 +49,7 @@ GetOptions(
 );
 
 if(scalar(@opt_single_color) == 2) {
-  set_single_color(@opt_single_color);
+  set_single_color({ @opt_single_color });
   exit(0);
 }
 
@@ -60,7 +60,7 @@ sub set_single_color {
   my $hex   = shift;
   #my($r,$g,$b) = $hex =~ /(..)(..)(..)/;
 
-  print set_xterm_color($index, $hex);
+  print values %{ set_xterm_color($index => $hex) };
 
 }
 
@@ -72,7 +72,7 @@ sub set_shade {
   for my $color(@colors) {
     unless($i ~~ @opt_do_not_modify) {
       $color = substr($color, 0, 6);
-      print set_xterm_color($i, $color);
+      print for values %{ set_xterm_color({ $i => $color }) };
       if(($i +1) % 10 == 0) {
         print bg($i, fg(0, sprintf(" %03d ", $i))), "\n";
       }
