@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 our $APP     = 'colorcoke';
-our $VERSION = '0.407';
+our $VERSION = '0.408';
 
 use strict;
 use Getopt::Long;
@@ -155,9 +155,9 @@ colorcoke - modify the extended, non-ANSI terminal colorset
 B<colorcoke> shows off some cool things you can do with the L<Term::ExtendedColor>
 family of modules.
 
-colorcke lets one modify the extended colorset (88-16 or 256-16 colors,
+colorcoke lets one modify the extended colorset (88-16 or 256-16 colors,
 respectively) for a running terminal session. The change takes effect
-immediately - no need to restart the terminal, like when using xrdb.
+immediately - no need to restart the terminal.
 
 Shades and tints can be generated for an arbitary number of ranges.
 
@@ -169,12 +169,12 @@ The grey scale ramp (extended color index 232-255) is left untouched by
 default. To include them, set the end point to 255.
 
 Additional colors can be left untouched by specifying their index with the
---no flag. This can also be configured in the configuration file.
+C<--no flag>. This can also be configured in the configuration file.
 
 The base color to use is specified with the -c flag, and the stepping
 is controlled with the -r, -g and -b flag - red, green and blue channel.
 
-Red, blue and green amount is specified with -rr, -rg and -rb when the
+Red, green and blue amount is specified with C<-rr>, C<-rg> and C<-rb> when the
 randomizing option is used.
 
 =head1 OPTIONS
