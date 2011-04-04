@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 our $APP     = 'colorcoke';
-our $VERSION = '0.408';
+our $VERSION = '0.410';
 
 use strict;
 use Getopt::Long;
@@ -56,11 +56,9 @@ if(scalar(@opt_single_color) == 2) {
 set_shade(make_shade());
 
 sub set_single_color {
-  my $index = shift;
-  my $hex   = shift;
-  #my($r,$g,$b) = $hex =~ /(..)(..)(..)/;
+  my $index_to_hex = shift;
 
-  print values %{ set_xterm_color($index => $hex) };
+  print values %{ set_xterm_color( $index_to_hex ) };
 
 }
 
