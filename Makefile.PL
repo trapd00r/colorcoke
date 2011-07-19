@@ -15,7 +15,8 @@ WriteMakefile(
 
     PREREQ_PM           => {
       'Test::More' =>     0,
-      'Term::ExtendedColor::Xresources' => 0.002
+      'Term::ExtendedColor'             => 0,
+      'Term::ExtendedColor::Xresources' => 0,
     },
 
     EXE_FILES           => ['colorcoke',

@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 our $APP     = 'colorcoke';
-our $VERSION = '0.410';
+our $VERSION = '0.412';
 
 use strict;
 use Getopt::Long;
