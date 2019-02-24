@@ -23,7 +23,7 @@ WriteMakefile1(
     glob("bin/*"),
     glob("scripts/*"),
   ],
-  PREREQ_PM                           => {
+  PREREQ_PM => {
     'Term::ExtendedColor'             => '0',
     'Term::ExtendedColor::Xresources' => '0',
   },
