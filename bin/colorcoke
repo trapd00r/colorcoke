@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 our $APP     = 'colorcoke';
-our $VERSION = '0.420';
+our $VERSION = '0.422';
 
 no warnings 'experimental::smartmatch';
 
@@ -23,7 +23,8 @@ our $opt_random_g       = 256;
 our $opt_random_b       = 256;
 our $opt_single_hex     = 0;
 our @opt_single_color   = ();
-our @opt_do_not_modify  = (0,7,15,232);
+#our @opt_do_not_modify  = (0,7,15,232);
+our @opt_do_not_modify  = ();
 
 if(!@ARGV) {
   print "$APP $VERSION\n\n";
