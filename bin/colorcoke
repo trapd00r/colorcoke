@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 our $APP     = 'colorcoke';
-our $VERSION = '0.422';
+our $VERSION = '0.430';
 
 no warnings 'experimental::smartmatch';
 
@@ -202,8 +202,9 @@ randomizing option is used.
 
   Magnus Woldrich
   CPAN ID: WOLDRICH
-  magnus@trapd00r.se
+  m@japh.se
   http://japh.se
+  https://github.com/trapd00r
 
 =head1 SEE ALSO
 
@@ -211,8 +212,8 @@ L<Term::ExtendedColor>, L<Term::ExtendedColor::Xresources>, L<Term::ExtendedColo
 
 =head1 COPYRIGHT
 
-Copyright 2010, 2011 Magnus Woldrich <magnus@trapd00r.se>. This program is free
-software; you may redistribute it and/or modify it under the same terms as
-Perl itself.
+Copyright 2010, 2011, 2019- Magnus Woldrich <m@japh.se>. This program is
+free software; you may redistribute it and/or modify it under the same
+terms as Perl itself.
 
 =cut
