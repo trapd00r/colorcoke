@@ -54,7 +54,7 @@ randomizing option is used.
       m@japh.se
       http://japh.se
 
-#SEE ALSO
+# SEE ALSO
 
     Term::ExtendedColor, Term::ExtendedColor::Xresources,
     Term::ExtendedColor::TTY
